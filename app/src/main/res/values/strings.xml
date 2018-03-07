@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BetMe</string>
+    <string name="action_settings">Settings</string>
+    <string name="logo">Logo</string>
+    <string name="title_activity_logged_in">LoggedIn</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="button">Button</string>
+    <string name="login_error">Incorrect user details</string>
+</resources>
