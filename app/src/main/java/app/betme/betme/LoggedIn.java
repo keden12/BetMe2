@@ -20,8 +20,12 @@ public class LoggedIn extends AppCompatActivity {
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
         String parsedBalance = Double.toString(Current.balance);
+        parsedBalance = parsedBalance.replaceAll("\\s+","");
+        Money.setInputType(0);
+        User.setInputType(0);
         Money.setText(parsedBalance);
-        User.setText(Current.username);
+        User.setText(" "+Current.username);
+
 
     }
 

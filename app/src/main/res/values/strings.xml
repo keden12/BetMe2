@@ -7,4 +7,6 @@
     <string name="username">Username</string>
     <string name="button">Button</string>
     <string name="login_error">Incorrect user details</string>
+    <string name="player" />
+    <string name="balance" />
 </resources>
