@@ -6,6 +6,7 @@ import java.util.Map;
 
 import Models.Bets;
 import Models.User;
+import Utils.DatabaseHelper;
 import app.betme.betme.MainActivity;
 import app.betme.betme.R;
 
@@ -18,14 +19,14 @@ public class BetMeAPI {
 private static Map<String, User> users = new HashMap<>();
 private static Map<Long, Bets> bets = new HashMap<>();
 
+static DatabaseHelper db;
 
 
-public static String PACKAGE_NAME;
 
 public static User addUser(String username, String password, String email, Double balance, Long bets)
 {
-    User user = new User(username,password,email,balance,Long.valueOf(0));
-    users.put(user.username,user);
+    User user = new User(username,password,email,balance,bets);
+    db.insert(username,password,email,balance,bets);
 
     return user;
 
@@ -36,20 +37,8 @@ public static User getUserByUsername(String username)
     return users.get(username);
 }
 
-//Login check
-public static boolean authenticate(String username, String password)
-    {
 
-        if (users.containsKey(username))
-        {
-            User user = users.get(username);
-            if (user.password.matches(password))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 
 }

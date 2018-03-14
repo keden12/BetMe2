@@ -13,10 +13,14 @@ import Models.User;
 public class LoggedIn extends AppCompatActivity {
     EditText Money,User;
     User Current = MainActivity.CurrentlyLogged;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
         String parsedBalance = Double.toString(Current.balance);

@@ -59,7 +59,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
         android:background="@drawable/itembackground"
-        android:text="@string/button" />
+        android:text="@string/login_button" />
 
     <TextView
         android:id="@+id/Incorrect"
@@ -71,6 +71,17 @@
         android:visibility="gone"
         android:text="@string/login_error"
         android:textColor="@color/colorError" />
+
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:text="@string/sign_up"
+        android:textSize="16sp"
+        tools:text="Sign Up" />
 
 
 </RelativeLayout>

@@ -9,4 +9,18 @@
     <string name="login_error">Incorrect user details</string>
     <string name="player" />
     <string name="balance" />
+    <string name="title_activity_register">Register</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="register_username">Enter your username</string>
+    <string name="register_password">Enter your password</string>
+    <string name="register_email">Enter your email</string>
+    <string name="register_button">Register</string>
+    <string name="login_button">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="EmptyConfPass">Confirm your password!</string>
+    <string name="EmptyUsernameReg">Enter in your username!</string>
+    <string name="EmptyPassReg">Enter in your password!</string>
+    <string name="EmptyEmailReg">Enter in your email!</string>
+    <string name="emailExists">Email already exists!</string>
+    <string name="usernameExists">Username already exists!</string>
 </resources>
