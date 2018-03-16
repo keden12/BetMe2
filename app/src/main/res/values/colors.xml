@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorError">#FF0000</color>
     <color name="colorYellow">#e5f442</color>
+    <color name="colorMoney">#34d61b</color>
 </resources>

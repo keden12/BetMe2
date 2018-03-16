@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,6 +37,7 @@
                 android:labelFor="@id/Balance"
                 android:ems="10"
                 android:inputType="none"
+                android:textColor="@color/colorMoney"
                 tools:text="@string/balance" />
 
             <EditText
@@ -46,12 +48,24 @@
                 android:layout_alignParentTop="true"
                 android:labelFor="@id/Player"
                 android:background="#80000000"
-                android:drawableStart="@drawable/ic_action_user2"
+                android:drawableStart="@drawable/ic_action_user3"
                 android:ems="10"
                 android:inputType="none"
                 android:textColor="@color/colorYellow"
                 tools:text="@string/player" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/AddBet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="29dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_action_addbet" android:focusable="true"/>
 
 </RelativeLayout>

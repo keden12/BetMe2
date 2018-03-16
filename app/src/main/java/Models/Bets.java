@@ -14,17 +14,21 @@ public class Bets {
         public long id;
         String condition;
         String place;
+        String creator;
+        String joined;
         long hours;
         double amount;
 
 
-        public Bets(String condition, String place,long hours, double amount)
+        public Bets(String condition, String place,long hours, double amount, String creator, String joined)
         {
             this.id = counter++;
             this.condition = condition;
             this.place = place;
             this.hours = hours;
             this.amount = amount;
+            this.creator = creator;
+            this.joined = joined;
 
         }
 
@@ -37,7 +41,7 @@ public class Bets {
         }
     public int hashCode()
     {
-        return Objects.hash(this.condition, this.place,this.hours, this.amount);
+        return Objects.hash(this.condition, this.place,this.hours, this.amount, this.creator, this.joined);
     }
 
     public boolean equals(final Object obj)
@@ -48,6 +52,8 @@ public class Bets {
             return Objects.equals(condition,  other.condition)
                     && Objects.equals(place,  other.place)
                     && Objects.equals(hours,  other.hours)
+                    && Objects.equals(creator,  other.creator)
+                    && Objects.equals(joined,  other.joined)
                     && Objects.equals(amount,     other.amount);
 
         }
