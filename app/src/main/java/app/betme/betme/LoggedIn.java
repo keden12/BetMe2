@@ -1,6 +1,7 @@
 package app.betme.betme;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import Models.User;
+import Utils.DatabaseHelper;
 
 public class LoggedIn extends AppCompatActivity implements View.OnClickListener {
     EditText Money,User;
@@ -21,12 +24,17 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
     FloatingActionButton addbet,page2,page3;
     NumberPicker condition,place,hours,amount;
     Button placebet;
+    DatabaseHelper database;
+    TextView credits;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+
+
+
 
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
@@ -37,6 +45,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
         User.setInputType(0);
         Money.setText(parsedBalance);
         User.setText(" "+Current.username);
+        database = new DatabaseHelper(this);
 
         addbet.setOnClickListener(this);
 
@@ -93,6 +102,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                 amount = (NumberPicker) view3.findViewById(R.id.amountBet);
                                 amount.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
                                 placebet = (Button) view3.findViewById(R.id.placebetButton);
+                                credits = (TextView) view3.findViewById(R.id.creditsError);
                                 amount.setMinValue(1);
                                 amount.setMaxValue(100);
 
@@ -101,18 +111,52 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                 dialog3.show();
 
                                 placebet.setOnClickListener(new View.OnClickListener(){
-
                                     public void onClick(View view)
                                     {
-                                        dialog3.cancel();
+                                        int amountget = amount.getValue();
+                                        Double amountdouble = (double) amountget;
+                                        if(amountdouble > Current.balance)
+                                        {
+                                            credits.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            dialog3.cancel();
+                                            Current.balance = Current.balance - amountdouble;
+                                            int conditonget = condition.getValue();
+                                            String conditionstring = "";
+                                            if (conditonget == 0) {
+                                                conditionstring = "It will rain";
+                                            } else if (conditonget == 1) {
+                                                conditionstring = "It will be sunny";
+                                            } else {
+                                                conditionstring = "It will snow";
+                                            }
+                                            int placeget = place.getValue();
+                                            String placestring = "";
+                                            if (placeget == 0) {
+                                                placestring = "Paris";
+                                            } else if (placeget == 1) {
+                                                placestring = "New York";
+                                            } else {
+                                                placestring = "London";
+                                            }
+                                            int hoursget = hours.getValue();
+                                            int hoursint = 0;
+                                            if (hoursget == 0) {
+                                                hoursint = 2;
+                                            } else if (hoursget == 1) {
+                                                hoursint = 6;
+                                            } else if (hoursget == 2) {
+                                                hoursint = 12;
+                                            } else {
+                                                hoursint = 24;
+                                            }
+                                            String joined = "Free";
+
+                                            database.insertBet(conditionstring, placestring, hoursint, amountdouble, Current.username, joined);
 
 
-
-
-
-
-
-
+                                        }
                                     }
                                 });
 

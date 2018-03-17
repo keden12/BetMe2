@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/toolbarbackground">
+
+
+    <Button
+        android:id="@+id/placebetButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/textView11"
+        android:layout_below="@+id/textView11"
+        android:layout_marginTop="114dp"
+        android:background="@drawable/registerbackground"
+        android:text="Place Bet" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="What amount.."
+        android:textSize="30dp" />
+
+    <NumberPicker
+        android:id="@+id/amountBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_toStartOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/amountBet"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="68dp"
+        android:layout_toStartOf="@+id/amountBet"
+        android:text="For"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView11"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp"
+        android:text="$$$$"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/creditsError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/placebetButton"
+        android:layout_below="@+id/amountBet"
+        android:layout_marginEnd="38dp"
+        android:layout_marginTop="16dp"
+        android:text="Not enough credits!"
+        android:visibility="gone"
+        android:textColor="@color/colorError" />
+
+</RelativeLayout>

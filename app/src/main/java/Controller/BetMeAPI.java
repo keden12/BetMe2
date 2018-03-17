@@ -26,7 +26,7 @@ static DatabaseHelper db;
 public static User addUser(String username, String password, String email, Double balance, Long bets)
 {
     User user = new User(username,password,email,balance,bets);
-    db.insert(username,password,email,balance,bets);
+    db.insertUser(username,password,email,balance,bets);
 
     return user;
 

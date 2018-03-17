@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/androidtheme"
+    tools:context="app.betme.betme.Register">
+
+    <TextView
+        android:id="@+id/emailExists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/emailExists"
+        android:visibility="gone"
+        android:textColor="@color/colorError" />
+
+    <TextView
+        android:id="@+id/usernameExists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/usernameExists"
+        android:visibility="gone"
+        android:textColor="@color/colorError" />
+
+    <TextView
+        android:id="@+id/EmptyUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:visibility="gone"
+        android:text="@string/EmptyUsernameReg"
+        android:textColor="@color/colorError" />
+
+    <TextView
+        android:id="@+id/EmptyEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/EmptyEmailReg"
+        android:textColor="@color/colorError"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/EmptyConfPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerConfirmPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/EmptyConfPass"
+        android:visibility="gone"
+        android:textColor="@color/colorError" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/registerConfirmPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/registerbackground"
+        android:text="@string/register_button" />
+
+    <EditText
+        android:id="@+id/registerUsername"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/registerEmail"
+        android:layout_marginTop="67dp"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_username"
+        android:ems="10"
+        android:hint="@string/register_username"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/registerUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_email"
+        android:ems="10"
+        android:hint="@string/register_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/registerEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_password"
+        android:ems="10"
+        android:hint="@string/register_password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/registerConfirmPassword"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/registerPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_password"
+        android:ems="10"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appBarLayout2">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/EmptyPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:visibility="gone"
+        android:text="@string/EmptyPassReg"
+        android:textColor="@color/colorError" />
+
+</RelativeLayout>

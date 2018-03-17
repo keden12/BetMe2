@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/toolbarbackground"
+    >
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Okay... But When?"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hoursBet"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginBottom="67dp"
+        android:layout_marginStart="24dp"
+        android:text="In"
+        android:textSize="30dp" />
+
+    <NumberPicker
+        android:id="@+id/hoursBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="17dp"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignEnd="@+id/textView2"
+        android:text="hours"
+        android:textSize="30dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/page3Bet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView5"
+        android:layout_below="@+id/hoursBet"
+        android:layout_marginEnd="9dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:scaleType="center"
+        app:backgroundTint="@color/colorYellow"
+        app:srcCompat="@drawable/ic_action_nextpage" />
+</RelativeLayout>

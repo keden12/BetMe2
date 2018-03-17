@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/toolbarbackground">
+
+    <NumberPicker
+        android:id="@+id/placeBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginTop="82dp" />
+
+    <NumberPicker
+        android:id="@+id/conditionBet"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/placeBet"
+        android:layout_marginEnd="31dp"
+        android:layout_toStartOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/conditionBet"
+        android:layout_marginBottom="66dp"
+        android:layout_marginEnd="31dp"
+        android:layout_toStartOf="@+id/placeBet"
+        android:text="in"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/conditionBet"
+        android:layout_alignEnd="@+id/placeBet"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="11dp"
+        android:text="I Bet You That..."
+        android:textSize="30dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pageBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/placeBet"
+        android:layout_below="@+id/placeBet"
+        android:layout_marginTop="27dp"
+        android:clickable="true"
+        android:scaleType="center"
+        app:backgroundTint="@color/colorYellow"
+        app:srcCompat="@drawable/ic_action_nextpage" />
+
+</RelativeLayout>

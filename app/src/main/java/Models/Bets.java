@@ -9,9 +9,7 @@ import java.util.Objects;
 public class Bets {
 
 
-    public static Long counter = 0l;
 
-        public long id;
         String condition;
         String place;
         String creator;
@@ -22,7 +20,6 @@ public class Bets {
 
         public Bets(String condition, String place,long hours, double amount, String creator, String joined)
         {
-            this.id = counter++;
             this.condition = condition;
             this.place = place;
             this.hours = hours;
