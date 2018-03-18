@@ -10,9 +10,9 @@ public class User {
 
    public String username;
    public String password;
-    String email;
+    public String email;
     public Double balance;
-    Long bets;
+    public Long bets;
 
 
     public User(String username, String password, String email, Double balance, Long bets)

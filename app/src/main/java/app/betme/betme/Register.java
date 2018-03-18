@@ -14,13 +14,14 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import Models.User;
+import Utils.DBAdapter;
 import Utils.DatabaseHelper;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     static int registerLogin;
     static User CurrentlyRegistered;
-    DatabaseHelper database;
+    DBAdapter myDb;
     Button Register;
     EditText RegUsername,RegEmail,RegPass,RegConfPass;
     TextView emptyUsername, emptyEmail, emptyPassword, emptyConfPassword, usernameAlreadyExists, emailAlreadyExists;
@@ -43,7 +44,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         emptyConfPassword = (TextView) findViewById(R.id.EmptyConfPass);
         usernameAlreadyExists = (TextView) findViewById(R.id.usernameExists);
         emailAlreadyExists = (TextView) findViewById(R.id.emailExists);
-        database = new DatabaseHelper(this);
+        myDb = new DBAdapter(this);
+        myDb.open();
 
         Register.setOnClickListener(this);
 
@@ -68,8 +70,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String password = RegPass.getText().toString();
                 String confpassword = RegConfPass.getText().toString();
 
-                Boolean checkUsername = database.checkUsername(username);
-                Boolean checkEmail = database.checkEmail(email);
+                Boolean checkUsername = myDb.checkUsername(username);
+                Boolean checkEmail = myDb.checkEmail(email);
+
+                Boolean check = false;
 
                 if(username.equals(""))
                 {
@@ -95,8 +99,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 {
                     emailAlreadyExists.setVisibility(View.VISIBLE);
                 }
+
+
                 else{
-                    Boolean insert = database.insertUser(username,password,email,0.0,Long.valueOf(0));
+                    Boolean insert = myDb.insertUser(username,password,email,0.0,Long.valueOf(0));
                     if(insert == true)
                     {
                         startActivity(new Intent(this,MainActivity.class));

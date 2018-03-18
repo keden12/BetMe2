@@ -14,6 +14,7 @@ import java.io.File;
 
 import Controller.BetMeAPI;
 import Models.User;
+import Utils.DBAdapter;
 import Utils.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button LoginButton;
     EditText LogUsername,LogPassword;
     TextView Error, SignUp;
-    DatabaseHelper db;
+    DBAdapter myDb;
 
 
     @Override
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LoginButton = (Button) findViewById(R.id.Login);
         Error = (TextView) findViewById(R.id.Incorrect);
         SignUp = (TextView) findViewById(R.id.signUp);
-        db = new DatabaseHelper(this);
+        myDb = new DBAdapter(this);
+        myDb.open();
         LoginButton.setOnClickListener(this);
         SignUp.setOnClickListener(this);
 
@@ -57,9 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 final String username = LogUsername.getText().toString();
                 final String password = LogPassword.getText().toString();
 
-                if(db.authenticate(username,password))
+                if(myDb.authenticate(username,password))
                 {
-                    Cursor res = db.getUserByUsername(username);
+                    Cursor res = myDb.getUserByUsername(username);
                     if(res.getCount() == 0)
                     {
 

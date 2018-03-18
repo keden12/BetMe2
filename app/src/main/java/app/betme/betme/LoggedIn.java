@@ -1,5 +1,6 @@
 package app.betme.betme;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import Models.User;
+import Utils.DBAdapter;
 import Utils.DatabaseHelper;
 
 public class LoggedIn extends AppCompatActivity implements View.OnClickListener {
@@ -24,8 +30,10 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
     FloatingActionButton addbet,page2,page3;
     NumberPicker condition,place,hours,amount;
     Button placebet;
-    DatabaseHelper database;
+    DBAdapter myDb;
     TextView credits;
+    ListView betList;
+    int conditonget,placeget,hoursget,amountget;
 
 
     @Override
@@ -34,8 +42,9 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_logged_in);
 
 
-
-
+        myDb = new DBAdapter(this);
+        myDb.open();
+        populateListView();
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
         addbet = (FloatingActionButton) findViewById(R.id.AddBet);
@@ -45,12 +54,26 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
         User.setInputType(0);
         Money.setText(parsedBalance);
         User.setText(" "+Current.username);
-        database = new DatabaseHelper(this);
 
         addbet.setOnClickListener(this);
 
+    }
+
+    private void populateListView()
+    {
+      Cursor cursor = myDb.getAllRowsBet();
+        // Setup mapping from cursor to view fields:
+        String[] fromFieldNames = new String[]
+                {DBAdapter.KEY_CREATOR, DBAdapter.KEY_CONDITION, DBAdapter.KEY_PLACE, DBAdapter.KEY_HOURS,  DBAdapter.KEY_AMOUNT, DBAdapter.KEY_JOINED};
+        int[] toViewIDs = new int[]
+                {R.id.creatorList,     R.id.conditionList,           R.id.placeList,  R.id.hoursList,   R.id.amountList, R.id.joinedList};
+       SimpleCursorAdapter BettingAdapter;
+       BettingAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.item_layout,cursor,fromFieldNames,toViewIDs,0);
+       betList = (ListView) findViewById(R.id.BetList);
+       betList.setAdapter(BettingAdapter);
 
     }
+
 
     @Override
     public void onClick(View view) {
@@ -79,7 +102,8 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                 page2.setOnClickListener(new View.OnClickListener(){
 
                     public void onClick(View view){
-
+                        conditonget = condition.getValue();
+                        placeget = place.getValue();
                         dialog.cancel();
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoggedIn.this);
                         View view2 = getLayoutInflater().inflate(R.layout.dialog_addbet2, null);
@@ -96,6 +120,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                         page3.setOnClickListener(new View.OnClickListener(){
 
                             public void onClick(View view){
+                                hoursget = hours.getValue();
                                 dialog2.cancel();
                                 AlertDialog.Builder builder3 = new AlertDialog.Builder(LoggedIn.this);
                                 View view3 = getLayoutInflater().inflate(R.layout.dialog_addbet3,null);
@@ -113,16 +138,19 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                 placebet.setOnClickListener(new View.OnClickListener(){
                                     public void onClick(View view)
                                     {
-                                        int amountget = amount.getValue();
+                                         amountget = amount.getValue();
                                         Double amountdouble = (double) amountget;
                                         if(amountdouble > Current.balance)
                                         {
                                             credits.setVisibility(View.VISIBLE);
                                         }
                                         else {
-                                            dialog3.cancel();
                                             Current.balance = Current.balance - amountdouble;
-                                            int conditonget = condition.getValue();
+                                            myDb.updateData(Current.username,Current.password,Current.email,Current.balance,Current.bets);
+                                            String parsedBalance = Double.toString(Current.balance);
+                                            parsedBalance = parsedBalance.replaceAll("\\s+","");
+                                            Money.setInputType(0);
+                                            Money.setText(parsedBalance);
                                             String conditionstring = "";
                                             if (conditonget == 0) {
                                                 conditionstring = "It will rain";
@@ -131,7 +159,6 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                             } else {
                                                 conditionstring = "It will snow";
                                             }
-                                            int placeget = place.getValue();
                                             String placestring = "";
                                             if (placeget == 0) {
                                                 placestring = "Paris";
@@ -140,7 +167,6 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                             } else {
                                                 placestring = "London";
                                             }
-                                            int hoursget = hours.getValue();
                                             int hoursint = 0;
                                             if (hoursget == 0) {
                                                 hoursint = 2;
@@ -152,10 +178,14 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                                                 hoursint = 24;
                                             }
                                             String joined = "Free";
-
-                                            database.insertBet(conditionstring, placestring, hoursint, amountdouble, Current.username, joined);
-
-
+                                            String username = Current.username;
+                                            Boolean insert = myDb.insertBet(username, conditionstring,placestring, hoursint, amountdouble, joined);
+                                            if(insert == true)
+                                            {
+                                                myDb.updateData(Current.username,Current.password,Current.email,Current.balance,Current.bets+1);
+                                                dialog3.cancel();
+                                                populateListView();
+                                            }
                                         }
                                     }
                                 });

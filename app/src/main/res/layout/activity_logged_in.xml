@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cardView">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,5 +68,12 @@
         android:layout_marginStart="29dp"
         android:clickable="true"
         app:srcCompat="@drawable/ic_action_addbet" android:focusable="true"/>
+
+    <ListView
+        android:id="@+id/BetList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cardView" />
 
 </RelativeLayout>

@@ -13,15 +13,22 @@ import Models.User;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper{
+
+    public static final String KEY_ROWID = "_id";
+
+
+
+
+
     public DatabaseHelper(Context context)
     {
-        super(context, "Betting.db",null,1);
+        super(context, "BettingDatabase2.db",null,1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
           db.execSQL("Create table user(username text primary key,password text,email text,balance real,bets integer)");
-        db.execSQL("Create table bet(condition text,place text,hours integer,amount real,creator text primary key,joined text)");
+        db.execSQL("Create table bet(id real primary key,creator text,condition text,place text,hours integer,amount real,joined text)");
     }
 
     @Override
@@ -44,17 +51,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         else return true;
     }
 
-    public boolean insertBet(String condition,String place,int hours,double amount,String creator,String joined)
+    public long getLastID()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("condition",condition);
-        contentValues.put("place",place);
-        contentValues.put("hours",hours);
-        contentValues.put("amount",amount);
-        contentValues.put("creator",creator);
-        contentValues.put("joined",joined);
-        long ins = db.insert("bet",null,contentValues);
+        Cursor cursor = db.rawQuery("select max(id) from bet",null);
+        cursor.moveToFirst();
+        long ID = cursor.getLong(0);
+        cursor.close();
+        if(cursor == null)
+        {
+            ID = Long.valueOf(0);
+        }
+        return ID;
+    }
+
+    public boolean insertBet(String creator,String condition,String place,int hours,double amount,String joined)
+    {
+        long id = getLastID() + 1;
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contents= new ContentValues();
+        contents.put("id",id);
+        contents.put("creator",creator);
+        contents.put("condition",condition);
+        contents.put("place",place);
+        contents.put("hours",hours);
+        contents.put("amount",amount);
+        contents.put("joined",joined);
+        long ins = database.insert("bet",null,contents);
         if(ins == -1) return false;
         else return true;
     }
@@ -114,7 +137,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cursor.close();
         return data;
     }
-
+    public Cursor getAllBets() {
+        SQLiteDatabase database  = this.getWritableDatabase();
+        Cursor c = database.rawQuery("select * from bet", null);
+        if(c != null)
+        {
+            c.moveToFirst();
+        }
+       return c;
+    }
 
     public Cursor getUserByUsername(String username){
         SQLiteDatabase db  = this.getWritableDatabase();
