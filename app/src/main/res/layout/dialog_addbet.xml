@@ -30,8 +30,8 @@
         android:layout_marginBottom="66dp"
         android:layout_marginEnd="31dp"
         android:layout_toStartOf="@+id/placeBet"
-        android:text="in"
-        android:textSize="30dp" />
+        android:text="@string/in456"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -41,8 +41,8 @@
         android:layout_alignEnd="@+id/placeBet"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="11dp"
-        android:text="I Bet You That..."
-        android:textSize="30dp" />
+        android:text="@string/i_bet_you_that3"
+        android:textSize="30sp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/pageBet"
@@ -54,6 +54,6 @@
         android:clickable="true"
         android:scaleType="center"
         app:backgroundTint="@color/colorYellow"
-        app:srcCompat="@drawable/ic_action_nextpage" />
+        app:srcCompat="@drawable/ic_action_nextpage" android:focusable="true"/>
 
 </RelativeLayout>

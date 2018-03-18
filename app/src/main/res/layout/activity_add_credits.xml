@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.betme.betme.AddCredits"
+    android:background="@drawable/listitembackground">
+
+
+    <TextView
+        android:id="@+id/addcreds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/add_credits"
+        android:textSize="30sp"/>
+
+    <NumberPicker
+        android:id="@+id/addcredsPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/addcredsButton"
+        android:layout_below="@+id/addcreds"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:id="@+id/addcredsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addcredsPicker"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="114dp"
+        android:background="@drawable/itembackground"
+        android:text="@string/buy_credits" />
+
+    <RadioGroup
+        android:id="@+id/payGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/addcredsPicker">
+
+        <RadioButton
+            android:id="@+id/paypal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/paypal" />
+
+        <RadioButton
+            android:id="@+id/debit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/debit" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/NotSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/addcredsButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="55dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/please_select_your_payment_method"
+        android:visibility="gone"
+        android:textColor="@color/colorError"/>
+
+</RelativeLayout>

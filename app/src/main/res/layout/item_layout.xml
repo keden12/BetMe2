@@ -10,9 +10,9 @@
         android:layout_alignBottom="@+id/textView19"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/textView19"
-        android:text="TextView"
+        android:text="@string/PlaceList"
         android:textColor="@color/colorBlue"
-        android:textSize="30dp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/betyou"
@@ -22,8 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="I bet you that..."
-        android:textSize="30dp" />
+        android:text="@string/i_bet_you_that2"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/amountList"
@@ -33,10 +33,10 @@
         android:layout_alignBottom="@+id/textView26"
         android:layout_marginStart="6dp"
         android:layout_toEndOf="@+id/textView26"
-        android:text="100"
+        android:drawableEnd="@drawable/ic_action_money2"
+        android:text="@string/amountList2"
         android:textColor="@color/colorBlue"
-        android:textSize="30dp"
-        android:drawableRight="@drawable/ic_action_money2"/>
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/conditionList"
@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/betyou"
         android:layout_alignBottom="@+id/betyou"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="9dp"
         android:layout_toEndOf="@+id/betyou"
-        android:text="TextView"
+        android:text="@string/ConditionList2"
         android:textColor="@color/colorBlue"
-        android:textSize="30dp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView19"
@@ -58,8 +58,8 @@
         android:layout_below="@+id/betyou"
         android:layout_marginStart="13dp"
         android:layout_marginTop="12dp"
-        android:text="In"
-        android:textSize="30dp" />
+        android:text="@string/in1222"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView26"
@@ -67,9 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/placeList"
         android:layout_alignBottom="@+id/placeList"
-        android:layout_marginStart="13dp"
-        android:layout_toEndOf="@+id/placeList"
-        android:text="For:"
-        android:textSize="30dp" />
+        android:layout_alignStart="@+id/conditionList"
+        android:layout_marginStart="81dp"
+        android:text="@string/for44"
+        android:textSize="25sp" />
 
 </RelativeLayout>

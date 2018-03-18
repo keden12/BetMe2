@@ -1,7 +1,9 @@
 package app.betme.betme;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Random;
 
 import Models.User;
 import Utils.DBAdapter;
@@ -29,14 +32,21 @@ import Utils.DatabaseHelper;
 
 public class LoggedIn extends AppCompatActivity implements View.OnClickListener {
     EditText Money,User;
-    User Current = MainActivity.CurrentlyLogged;
+    static User Current = MainActivity.CurrentlyLogged;
     FloatingActionButton addbet,page2,page3;
     NumberPicker condition,place,hours,amount;
     Button placebet,joinbet;
     DBAdapter myDb;
-    TextView credits,itemcreator,itemplace,itemhours,itemcondition,itemamount,itemjoined,notenough;
+    TextView credits,itemcreator,itemplace,itemhours,itemcondition,itemamount,itemjoined,notenough,addcreds,logoff;
     ListView betList;
     int conditonget,placeget,hoursget,amountget;
+
+    public long timeleft2hrs = 7200000;
+    public long timeleft6hrs = 21600000;
+    public long timeleft12hrs = 43200000;
+    public long timeleft24hrs =  86400000;
+    public CountDownTimer countDownTimer,countDownTimer2,countDownTimer3,countDownTimer4;
+    public boolean timerrunning;
 
 
     @Override
@@ -50,6 +60,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
         addbet = (FloatingActionButton) findViewById(R.id.AddBet);
+        addcreds = (TextView) findViewById(R.id.addCredits);
         String parsedBalance = Double.toString(Current.balance);
         parsedBalance = parsedBalance.replaceAll("\\s+","");
         Money.setInputType(0);
@@ -58,20 +69,46 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
         User.setText(" "+Current.username);
 
         addbet.setOnClickListener(this);
+        addcreds.setOnClickListener(this);
 
         populateListView();
         registerListClickCallback();
 
     }
 
+
+
+
+
+
+    public void updateTimer(long idInDB)
+    {
+        int hours = (int) timeleft2hrs / 3600000;
+        int minutes = (int) timeleft2hrs % 3600000 / 60000;
+        int seconds = (int) timeleft2hrs % 3600000 % 60000 / 1000;
+
+        String timeleft;
+
+        timeleft = "" + hours;
+        timeleft += ":";
+        if(minutes < 10) timeleft += "0";
+        timeleft += minutes;
+        if(seconds < 10) timeleft += "0";
+        timeleft += seconds;
+
+
+
+    }
+
+
     private void populateListView()
     {
       Cursor cursor = myDb.getAllRowsBet();
         // Setup mapping from cursor to view fields:
         String[] fromFieldNames = new String[]
-                {DBAdapter.KEY_CREATOR, DBAdapter.KEY_CONDITION, DBAdapter.KEY_PLACE, DBAdapter.KEY_HOURS,  DBAdapter.KEY_AMOUNT, DBAdapter.KEY_JOINED};
+                {DBAdapter.KEY_CONDITION, DBAdapter.KEY_PLACE,DBAdapter.KEY_AMOUNT};
         int[] toViewIDs = new int[]
-                {R.id.creatorList,     R.id.conditionList,           R.id.placeList,  R.id.hoursList,   R.id.amountList, R.id.joinedList};
+                { R.id.conditionList,  R.id.placeList,  R.id.amountList};
 
 
 
@@ -82,22 +119,6 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    private void displayToastForId(long idInDB) {
-        Cursor cursor = myDb.getRowBet(idInDB);
-        if (cursor.moveToFirst()) {
-            long idDB = cursor.getLong(DBAdapter.COL_ROWID);
-            String creator = cursor.getString(DBAdapter.COL_CREATOR);
-            String condition = cursor.getString(DBAdapter.COL_CONDITION);
-            String place = cursor.getString(DBAdapter.COL_PLACE);
-
-            String message = "ID: " + idDB + "\n"
-                    + "Creator: " + creator + "\n"
-                    + "condition: " + condition + "\n"
-                    + "place: " + place;
-            Toast.makeText(LoggedIn.this, message, Toast.LENGTH_LONG).show();
-        }
-        cursor.close();
-    }
 
 
     private void registerListClickCallback() {
@@ -133,7 +154,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                 itemhours = (TextView) mView.findViewById(R.id.singleitemHours);
                 itemamount = (TextView) mView.findViewById(R.id.singleitemAmount);
                 itemjoined = (TextView) mView.findViewById(R.id.singleitemJoined);
-                notenough = (TextView) mView.findViewById(R.id.simpleitemNotEnough);
+                notenough = (TextView) mView.findViewById(R.id.simpleItemEnough);
                 joinbet = (Button) mView.findViewById(R.id.singleitemJoinButton);
                 final String finalcreator = creator;
                 final String finalcondition = condition;
@@ -144,6 +165,252 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                 String parsedInt = Integer.toString(finalhours);
                 String parsed = Double.toString(amount);
                 parsed = parsed.replaceAll("\\s+","");
+                if(finalhours == 2) {
+
+                    countDownTimer = new CountDownTimer(timeleft2hrs, 1000) {
+                        @Override
+                        public void onTick(long l) {
+                            timeleft2hrs = l;
+                            int hours = (int) timeleft2hrs / 3600000;
+                            int minutes = (int) timeleft2hrs % 3600000 / 60000;
+                            int seconds = (int) timeleft2hrs % 3600000 % 60000 / 1000;
+
+                            String timeleft;
+
+                            timeleft = "" + hours;
+                            timeleft += ":";
+                            if (minutes < 10) timeleft += "0";
+                            timeleft += minutes;
+                            timeleft += ":";
+                            if (seconds < 10) timeleft += "0";
+                            timeleft += seconds;
+
+
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                            myDb.deleteRowBet(idInDB);
+                            if (finaljoined.equals("Free")) {
+                                Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                                Double winner = amount * 2;
+                                winner = winner + cursor1.getDouble(3);
+
+                                myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                            } else {
+                                Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                                Cursor cursor2 = myDb.getUserByUsername(finaljoined);
+                                Double winner = amount * 2;
+                                winner = winner + cursor1.getDouble(3);
+
+                                Double winner2 = amount * 2;
+                                winner = winner + cursor2.getDouble(3);
+                                Random r = new Random();
+                                int Low = 1;
+                                int High = 100;
+                                int Result = r.nextInt(High - Low) + Low;
+
+                                if (Result <= 50) {
+                                    myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                                } else {
+                                    myDb.updateData(cursor2.getString(0), cursor2.getString(1), cursor2.getString(2), winner2, cursor2.getLong(4));
+                                }
+
+
+                            }
+
+                        }
+                    }.start();}
+
+
+                else if(finalhours == 6)
+                {
+                countDownTimer2 = new CountDownTimer(timeleft6hrs, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        timeleft6hrs = l;
+                        int hours = (int) timeleft6hrs / 3600000;
+                        int minutes = (int) timeleft6hrs % 3600000 / 60000;
+                        int seconds = (int) timeleft6hrs % 3600000 % 60000 / 1000;
+
+                        String timeleft;
+
+                        timeleft = "" + hours;
+                        timeleft += ":";
+                        if (minutes < 10) timeleft += "0";
+                        timeleft += minutes;
+                        timeleft += ":";
+                        if (seconds < 10) timeleft += "0";
+                        timeleft += seconds;
+
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                        myDb.deleteRowBet(idInDB);
+                        if (finaljoined.equals("Free")) {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                        } else {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Cursor cursor2 = myDb.getUserByUsername(finaljoined);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            Double winner2 = amount * 2;
+                            winner = winner + cursor2.getDouble(3);
+                            Random r = new Random();
+                            int Low = 1;
+                            int High = 100;
+                            int Result = r.nextInt(High - Low) + Low;
+
+                            if (Result <= 50) {
+                                myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                            } else {
+                                myDb.updateData(cursor2.getString(0), cursor2.getString(1), cursor2.getString(2), winner2, cursor2.getLong(4));
+                            }
+
+
+                        }
+
+                    }
+                }.start();}
+
+                else if(finalhours == 12)
+                {
+                countDownTimer3 = new CountDownTimer(timeleft12hrs, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        timeleft12hrs = l;
+                        int hours = (int) timeleft12hrs / 3600000;
+                        int minutes = (int) timeleft12hrs % 3600000 / 60000;
+                        int seconds = (int) timeleft12hrs % 3600000 % 60000 / 1000;
+
+                        String timeleft;
+
+                        timeleft = "" + hours;
+                        timeleft += ":";
+                        if (minutes < 10) timeleft += "0";
+                        timeleft += minutes;
+                        timeleft += ":";
+                        if (seconds < 10) timeleft += "0";
+                        timeleft += seconds;
+
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                        myDb.deleteRowBet(idInDB);
+                        if (finaljoined.equals("Free")) {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                        } else {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Cursor cursor2 = myDb.getUserByUsername(finaljoined);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            Double winner2 = amount * 2;
+                            winner = winner + cursor2.getDouble(3);
+                            Random r = new Random();
+                            int Low = 1;
+                            int High = 100;
+                            int Result = r.nextInt(High - Low) + Low;
+
+                            if (Result <= 50) {
+                                myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                            } else {
+                                myDb.updateData(cursor2.getString(0), cursor2.getString(1), cursor2.getString(2), winner2, cursor2.getLong(4));
+                            }
+
+
+                        }
+
+                    }
+                }.start();}
+
+                else if(finalhours == 24)
+                {
+                countDownTimer4 = new CountDownTimer(timeleft24hrs, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        timeleft24hrs = l;
+                        int hours = (int) timeleft24hrs / 3600000;
+                        int minutes = (int) timeleft24hrs % 3600000 / 60000;
+                        int seconds = (int) timeleft24hrs % 3600000 % 60000 / 1000;
+
+                        String timeleft;
+
+                        timeleft = "" + hours;
+                        timeleft += ":";
+                        if (minutes < 10) timeleft += "0";
+                        timeleft += minutes;
+                        timeleft += ":";
+                        if (seconds < 10) timeleft += "0";
+                        timeleft += seconds;
+
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                        myDb.deleteRowBet(idInDB);
+                        if (finaljoined.equals("Free")) {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                        } else {
+                            Cursor cursor1 = myDb.getUserByUsername(finalcreator);
+                            Cursor cursor2 = myDb.getUserByUsername(finaljoined);
+                            Double winner = amount * 2;
+                            winner = winner + cursor1.getDouble(3);
+
+                            Double winner2 = amount * 2;
+                            winner = winner + cursor2.getDouble(3);
+                            Random r = new Random();
+                            int Low = 1;
+                            int High = 100;
+                            int Result = r.nextInt(High - Low) + Low;
+
+                            if (Result <= 50) {
+                                myDb.updateData(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), winner, cursor1.getLong(4));
+                            } else {
+                                myDb.updateData(cursor2.getString(0), cursor2.getString(1), cursor2.getString(2), winner2, cursor2.getLong(4));
+                            }
+
+
+                        }
+
+                    }
+                }.start();}
+
+
+
+
+
+
+
+
+
+
 
                 itemcreator.setText(finalcreator);
                 itemcondition.setText(finalcondition);
@@ -155,11 +422,12 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                 {
                     joinbet.setVisibility(View.VISIBLE);
                 }
+
+
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
-                 displayToastForId(idInDB);
 
                 joinbet.setOnClickListener(new View.OnClickListener(){
 
@@ -353,9 +621,16 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
                 break;
 
+            case R.id.addCredits:
+                startActivity(new Intent(this,AddCredits.class));
+
+
+                break;
+
 
 
 
         }
     }
+
 }

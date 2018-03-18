@@ -12,7 +12,7 @@
         android:layout_below="@+id/textView11"
         android:layout_marginTop="114dp"
         android:background="@drawable/registerbackground"
-        android:text="Place Bet" />
+        android:text="@string/place_bet" />
 
     <TextView
         android:id="@+id/textView6"
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="What amount.."
-        android:textSize="30dp" />
+        android:text="@string/what_amount"
+        android:textSize="30sp" />
 
     <NumberPicker
         android:id="@+id/amountBet"
@@ -40,8 +40,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="68dp"
         android:layout_toStartOf="@+id/amountBet"
-        android:text="For"
-        android:textSize="30dp" />
+        android:text="@string/for55"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textView12"
@@ -51,8 +51,8 @@
         android:layout_alignBottom="@+id/textView11"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="14dp"
-        android:text="$$$$"
-        android:textSize="30dp" />
+        android:text="@string/money22"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/creditsError"
@@ -62,7 +62,7 @@
         android:layout_below="@+id/amountBet"
         android:layout_marginEnd="38dp"
         android:layout_marginTop="16dp"
-        android:text="Not enough credits!"
+        android:text="@string/not_enough_credits2"
         android:visibility="gone"
         android:textColor="@color/colorError" />
 

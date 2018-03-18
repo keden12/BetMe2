@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String email;
     Double balance;
     Long bets;
-    static int mainLogin;
     static User CurrentlyLogged;
     Button LoginButton;
     EditText LogUsername,LogPassword;
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     CurrentlyLogged = new User(user,pass,email,balance,bets);
                     startActivity(new Intent(this,LoggedIn.class));
+                    finish();
                 }
                 else
                 {
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
 
 
 

@@ -54,6 +54,15 @@
                 android:inputType="none"
                 android:textColor="@color/colorYellow"
                 tools:text="@string/player" />
+
+            <TextView
+                android:id="@+id/addCredits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/Balance"
+                android:drawableRight="@drawable/ic_action_addcredits" />
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

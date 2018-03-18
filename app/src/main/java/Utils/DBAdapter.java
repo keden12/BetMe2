@@ -84,6 +84,12 @@ public class DBAdapter {
         return this;
     }
 
+    public DBAdapter Close()
+    {
+        db.close();
+        return this;
+    }
+
     // Close the database connection.
     public void close() {
         myDBHelper.close();
