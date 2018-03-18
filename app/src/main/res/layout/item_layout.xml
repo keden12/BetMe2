@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/placeList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView19"
+        android:layout_alignBottom="@+id/textView19"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/textView19"
+        android:text="TextView"
+        android:textColor="@color/colorBlue"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/betyou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="I bet you that..."
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/creatorList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView20"
+        android:layout_alignBottom="@+id/textView20"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/textView20"
+        android:text="TextView"
+        android:textColor="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/amountList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView26"
+        android:layout_alignBottom="@+id/textView26"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/textView26"
+        android:text="100"
+        android:textColor="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/conditionList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/betyou"
+        android:layout_alignBottom="@+id/betyou"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/betyou"
+        android:text="TextView"
+        android:textColor="@color/colorBlue"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/betyou"
+        android:layout_below="@+id/amountList"
+        android:layout_marginTop="22dp"
+        android:text="From:" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/conditionList"
+        android:layout_alignBottom="@+id/conditionList"
+        android:layout_marginStart="25dp"
+        android:layout_toEndOf="@+id/conditionList"
+        android:text="In"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/betyou"
+        android:layout_below="@+id/betyou"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="18dp"
+        android:text="Timer:" />
+
+    <TextView
+        android:id="@+id/hoursList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView24"
+        android:layout_alignBottom="@+id/textView24"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/textView20"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/hoursList"
+        android:layout_alignBottom="@+id/hoursList"
+        android:layout_alignStart="@+id/conditionList"
+        android:text="For:" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/amountList"
+        android:layout_alignBottom="@+id/amountList"
+        android:layout_alignStart="@+id/textView19"
+        android:text="Status:" />
+
+    <TextView
+        android:id="@+id/joinedList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView27"
+        android:layout_alignBottom="@+id/textView27"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/textView27"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/conditionList"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/amountList"
+        android:drawableLeft="@drawable/ic_action_money2" />
+
+</RelativeLayout>
