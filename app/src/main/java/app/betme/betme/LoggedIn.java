@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,6 +18,8 @@ import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -29,9 +32,9 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
     User Current = MainActivity.CurrentlyLogged;
     FloatingActionButton addbet,page2,page3;
     NumberPicker condition,place,hours,amount;
-    Button placebet;
+    Button placebet,joinbet;
     DBAdapter myDb;
-    TextView credits;
+    TextView credits,itemcreator,itemplace,itemhours,itemcondition,itemamount,itemjoined,notenough;
     ListView betList;
     int conditonget,placeget,hoursget,amountget;
 
@@ -44,7 +47,6 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
         myDb = new DBAdapter(this);
         myDb.open();
-        populateListView();
         Money = (EditText) findViewById(R.id.Balance);
         User = (EditText) findViewById(R.id.Player);
         addbet = (FloatingActionButton) findViewById(R.id.AddBet);
@@ -57,6 +59,9 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
         addbet.setOnClickListener(this);
 
+        populateListView();
+        registerListClickCallback();
+
     }
 
     private void populateListView()
@@ -67,11 +72,153 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
                 {DBAdapter.KEY_CREATOR, DBAdapter.KEY_CONDITION, DBAdapter.KEY_PLACE, DBAdapter.KEY_HOURS,  DBAdapter.KEY_AMOUNT, DBAdapter.KEY_JOINED};
         int[] toViewIDs = new int[]
                 {R.id.creatorList,     R.id.conditionList,           R.id.placeList,  R.id.hoursList,   R.id.amountList, R.id.joinedList};
+
+
+
        SimpleCursorAdapter BettingAdapter;
        BettingAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.item_layout,cursor,fromFieldNames,toViewIDs,0);
        betList = (ListView) findViewById(R.id.BetList);
        betList.setAdapter(BettingAdapter);
 
+    }
+
+    private void displayToastForId(long idInDB) {
+        Cursor cursor = myDb.getRowBet(idInDB);
+        if (cursor.moveToFirst()) {
+            long idDB = cursor.getLong(DBAdapter.COL_ROWID);
+            String creator = cursor.getString(DBAdapter.COL_CREATOR);
+            String condition = cursor.getString(DBAdapter.COL_CONDITION);
+            String place = cursor.getString(DBAdapter.COL_PLACE);
+
+            String message = "ID: " + idDB + "\n"
+                    + "Creator: " + creator + "\n"
+                    + "condition: " + condition + "\n"
+                    + "place: " + place;
+            Toast.makeText(LoggedIn.this, message, Toast.LENGTH_LONG).show();
+        }
+        cursor.close();
+    }
+
+
+    private void registerListClickCallback() {
+        betList = (ListView) findViewById(R.id.BetList);
+        betList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked,
+                                    int position, final long idInDB) {
+                Cursor cursor = myDb.getRowBet(idInDB);
+                String creator= "";
+                String condition = "";
+                String place = "";
+                int hours = 0;
+                double balance = 0.0;
+                String joined = "";
+
+                if (cursor.moveToFirst()) {
+                    long idDB = cursor.getLong(DBAdapter.COL_ROWID);
+                    creator = cursor.getString(DBAdapter.COL_CREATOR);
+                    condition = cursor.getString(DBAdapter.COL_CONDITION);
+                    place = cursor.getString(DBAdapter.COL_PLACE);
+                    hours = cursor.getInt(DBAdapter.COL_HOURS);
+                    balance = cursor.getDouble(DBAdapter.COL_AMOUNT);
+                    joined = cursor.getString(DBAdapter.COL_JOINED);
+                }
+
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoggedIn.this);
+                View mView = getLayoutInflater().inflate(R.layout.singleitem_layout, null);
+                itemcreator = (TextView) mView.findViewById(R.id.singleitemCreator);
+                itemcondition = (TextView) mView.findViewById(R.id.singleitemCondition);
+                itemplace = (TextView) mView.findViewById(R.id.singleitemPlace);
+                itemhours = (TextView) mView.findViewById(R.id.singleitemHours);
+                itemamount = (TextView) mView.findViewById(R.id.singleitemAmount);
+                itemjoined = (TextView) mView.findViewById(R.id.singleitemJoined);
+                notenough = (TextView) mView.findViewById(R.id.simpleitemNotEnough);
+                joinbet = (Button) mView.findViewById(R.id.singleitemJoinButton);
+                final String finalcreator = creator;
+                final String finalcondition = condition;
+                final String finalplace = place;
+                final int finalhours = hours;
+                final double amount = balance;
+                final String finaljoined = joined;
+                String parsedInt = Integer.toString(finalhours);
+                String parsed = Double.toString(amount);
+                parsed = parsed.replaceAll("\\s+","");
+
+                itemcreator.setText(finalcreator);
+                itemcondition.setText(finalcondition);
+                itemplace.setText(finalplace);
+                itemhours.setText(parsedInt);
+                itemamount.setText(parsed);
+                itemjoined.setText(finaljoined);
+                if(joined.equals("Free")&&!Current.username.equals(creator))
+                {
+                    joinbet.setVisibility(View.VISIBLE);
+                }
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                 displayToastForId(idInDB);
+
+                joinbet.setOnClickListener(new View.OnClickListener(){
+
+                    public void onClick(View view) {
+                      if(Current.balance < amount)
+                      {
+                          notenough.setVisibility(View.VISIBLE);
+
+                      }
+                      else
+                      {
+                          dialog.cancel();
+                          Current.balance = Current.balance - amount;
+                          String parsedBalance = Double.toString(Current.balance);
+                          parsedBalance = parsedBalance.replaceAll("\\s+","");
+                          Money.setInputType(0);
+                          Money.setText(parsedBalance);
+                          myDb.updateData(Current.username,Current.password,Current.email,Current.balance,Current.bets);
+                          myDb.updateRowBet(idInDB,finalcreator,finalcondition,finalplace,finalhours,amount,Current.username);
+                      }
+
+
+
+
+
+                    }
+                    });
+
+
+
+
+
+
+
+
+
+                }
+        });
+    }
+
+
+
+
+    private void updateItem(long idInDB) {
+        Cursor cursor = myDb.getRowBet(idInDB);
+        if (cursor.moveToFirst()) {
+            long idDB = cursor.getLong(DBAdapter.COL_ROWID);
+            String creator = cursor.getString(DBAdapter.COL_CREATOR);
+            String condition = cursor.getString(DBAdapter.COL_CONDITION);
+            String place = cursor.getString(DBAdapter.COL_PLACE);
+            int hours = cursor.getInt(DBAdapter.COL_HOURS);
+            double balance = cursor.getDouble(DBAdapter.COL_AMOUNT);
+            String joined = cursor.getString(DBAdapter.COL_JOINED);
+
+
+            myDb.updateRowBet(idInDB,creator,condition,place,hours,balance,joined);
+        }
+        cursor.close();
+        populateListView();
     }
 
 

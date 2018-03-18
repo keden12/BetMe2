@@ -24,4 +24,19 @@
     <string name="emailExists">Email already exists!</string>
     <string name="usernameExists">Username already exists!</string>
     <string name="title_activity_add_credits">AddCredits</string>
+    <string name="i_bet_you_that">I bet you that....</string>
+    <string name="singleitemHours">Hours</string>
+    <string name="singleItemListIn">In</string>
+    <string name="SingleItemListHours">24</string>
+    <string name="singleItemPlace">TextView</string>
+    <string name="for2">For</string>
+    <string name="in2">In</string>
+    <string name="singleItemAmount">100</string>
+    <string name="posted_by">Posted By:</string>
+    <string name="join_status">Join Status:</string>
+    <string name="joinBetButton">Join</string>
+    <string name="not_enough_credits">Not Enough Credits</string>
+    <string name="singleItemCondition">Condition</string>
+    <string name="singleItemCreator">user</string>
+    <string name="singleItemStatus">status</string>
 </resources>

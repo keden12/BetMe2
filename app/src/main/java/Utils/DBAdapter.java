@@ -134,6 +134,7 @@ public class DBAdapter {
         return true;
     }
 
+
     public boolean checkEmail(String email)
     {
         Cursor cursor = db.rawQuery("Select * from user where email=?", new String[]{email});
