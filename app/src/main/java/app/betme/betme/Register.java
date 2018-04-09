@@ -33,6 +33,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+      //define what is what
         RegUsername = (EditText) findViewById(R.id.registerUsername);
         RegEmail = (EditText) findViewById(R.id.registerEmail);
         RegPass = (EditText) findViewById(R.id.registerPassword);
@@ -55,6 +56,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch(view.getId())
         {
+                //create a new user with the details given
             case R.id.registerButton:
 
                 emptyUsername.setVisibility(View.GONE);
@@ -75,6 +77,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                 Boolean check = false;
 
+                //error checking
                 if(username.equals(""))
                 {
                     emptyUsername.setVisibility(View.VISIBLE);
@@ -100,11 +103,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     emailAlreadyExists.setVisibility(View.VISIBLE);
                 }
 
-
+                //insert details into database
                 else{
                     Boolean insert = myDb.insertUser(username,password,email,0.0,Long.valueOf(0));
                     if(insert == true)
                     {
+                        //go back to the login screen
                         startActivity(new Intent(this,MainActivity.class));
                     }
                 }
