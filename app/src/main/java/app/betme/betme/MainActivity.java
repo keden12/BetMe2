@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String email;
     Double balance;
     Long bets;
+    //currently logged in user
     static User CurrentlyLogged;
     Button LoginButton;
     EditText LogUsername,LogPassword;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+//define what is where
         LogUsername = (EditText) findViewById(R.id.username);
         LogPassword = (EditText) findViewById(R.id.password);
         LoginButton = (Button) findViewById(R.id.Login);
@@ -54,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId())
         {
+          //gets the text and authenticates
             case R.id.Login:
                 final String username = LogUsername.getText().toString();
                 final String password = LogPassword.getText().toString();
 
                 if(myDb.authenticate(username,password))
                 {
+                    //gets values from the database
                     Cursor res = myDb.getUserByUsername(username);
                     if(res.getCount() == 0)
                     {
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
+                   //displays an error
                    Error.setVisibility(View.VISIBLE);
                 }
 
