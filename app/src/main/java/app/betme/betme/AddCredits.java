@@ -67,8 +67,9 @@ public class AddCredits extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
+                //update the balance of currently logged user
             case R.id.addcredsButton:
-
+                  
                 int amountget = amount.getValue();
                 Double amountdoub = (double) amountget;
                 Current.balance = Current.balance + amountdoub;
@@ -76,14 +77,17 @@ public class AddCredits extends AppCompatActivity implements View.OnClickListene
                 int selectedId = group .getCheckedRadioButtonId();
                 if(selectedId != R.id.paypal&& selectedId != R.id.debit)
                 {
+                    //display an error
                   error.setVisibility(View.VISIBLE);
-                }
+                } else {
+                    //thank for using whichever
                 RadioButton radioButton = (RadioButton) findViewById(selectedId);
                 Toast.makeText(AddCredits.this,"Thank you for using "+
                         radioButton.getText(), Toast.LENGTH_SHORT).show();
-
+                  //start a new activity
                 startActivity(new Intent(this,LoggedIn.class));
                 break;
+                }
 
 
         }
