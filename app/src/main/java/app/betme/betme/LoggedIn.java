@@ -32,6 +32,7 @@ import Utils.DatabaseHelper;
 
 public class LoggedIn extends AppCompatActivity implements View.OnClickListener {
     EditText Money,User;
+     //current user
     static User Current = MainActivity.CurrentlyLogged;
     FloatingActionButton addbet,page2,page3;
     NumberPicker condition,place,hours,amount;
@@ -41,6 +42,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
     ListView betList;
     int conditonget,placeget,hoursget,amountget;
 
+    //timer miliseconds defined
     public long timeleft2hrs = 7200000;
     public long timeleft6hrs = 21600000;
     public long timeleft12hrs = 43200000;
@@ -80,7 +82,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
 
 
-
+ //update the timer
     public void updateTimer(long idInDB)
     {
         int hours = (int) timeleft2hrs / 3600000;
@@ -100,7 +102,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-
+//populate the list view with data
     private void populateListView()
     {
       Cursor cursor = myDb.getAllRowsBet();
@@ -470,7 +472,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
 
 
-
+//update data
     private void updateItem(long idInDB) {
         Cursor cursor = myDb.getRowBet(idInDB);
         if (cursor.moveToFirst()) {
@@ -494,6 +496,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch(view.getId())
         {
+           //create a bet process
             case R.id.AddBet:
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoggedIn.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_addbet, null);
@@ -620,7 +623,7 @@ public class LoggedIn extends AppCompatActivity implements View.OnClickListener 
 
 
                 break;
-
+//add credits button clicked
             case R.id.addCredits:
                 startActivity(new Intent(this,AddCredits.class));
 
